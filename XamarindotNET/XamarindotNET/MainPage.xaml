@@ -1,9 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:XamarindotNET.ViewModel"
              x:Class="XamarindotNET.MainPage">
 
 
+    <ContentPage.BindingContext>
+        <local:MainPageViewModel/>
+    </ContentPage.BindingContext>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -19,12 +24,24 @@
 
         <Image Source="" BackgroundColor="Blue" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"/>
 
-        <Editor Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Placeholder="Enter Note here"/>
+        <Editor Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Placeholder="Enter Note here" Text="{Binding TheNote}"/>
 
-        <Button Grid.Row="2" Grid.Column="0" Text="Save"/>
-        <Button Grid.Row="2" Grid.Column="1" Text="Delete"/>
+        <Button Grid.Row="2" Grid.Column="0" Text="Save" Command="{Binding SaveCommand}"/>
+        <Button Grid.Row="2" Grid.Column="1" Text="Delete" Command="{Binding EraseCommand}"/>
 
-        <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Text="Cool" FontSize="Large"/>
+        <CollectionView ItemsSource="{Binding AllNotes}" Grid.Row="3" Grid.ColumnSpan="2" >
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <Frame>
+                            <Label Text="{Binding .}" FontSize="Title" TextColor ="Black"/>
+                        </Frame>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        
+        <!--<Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Text="Cool" FontSize="Large"/>-->
     </Grid>
 
 
